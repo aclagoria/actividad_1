@@ -12,7 +12,14 @@ def fuente(tabla: dict):
     return f
 
 # Análisis de frecuencias 
-
+def analisis(cadena): 
+    frecs = {}
+    for s in cadena:
+        if s in frecs:
+            frecs[s]+=1
+        else: 
+            frecs[s]=1
+    return frecs
 
 # Arbol de Huffman
 
