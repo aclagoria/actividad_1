@@ -54,7 +54,35 @@ def tabla_codigo(arbol, prefijo = ''): # la funcion a partir de una lista arbol 
 
 
 # Codificación y Decodificación
-def codificador(tabla): # fcion recibe un diccionario tabla
+def codificador(tabla): # devuelve una fcion que codifica, captura a tabla como una variable interna (Encapsula)
     def cod(secuencia):# fcion interna que codifica
         return ''.join(tabla[s] for s in secuencia) # Busca el codigo para cada simbolo de la secuencia. Con ''.join(...) une a todos en una cadena.
     return cod
+
+def decodificador(arbol): # devuelve una fcion que decodifica, captura a arbol como una variable interna
+    def deco(bits):
+        mensaje=[] # lista vacía para guardar los símbolos
+        nodo= arbol # se empieza en la raiz del arbol
+        for b in bits: # recorrer cada bit 
+            if b== '0': # nodo a la izquierda
+                nodo=nodo[0]
+            elif b=='1': # nodo a la derecha
+                nodo=nodo[1]
+            else:
+                raise ValueError("solo deben ser 0 o 1")
+            
+            n=len(nodo)
+            if n==2: # es todavía un nodo, entonces leer el siguiente bit 
+                continue
+            elif n==1: # es una hoja
+                mensaje.append(nodo[0]) # agragamos el simbolo de la hoja en mensaje
+                nodo = arbol # volvemos a la raiz para buscar el siguente símbolo
+            elif n==0: # nodo vacío
+                raise ValueError("Palabra no valida")
+            else:
+                raise ValueError("Arbol mal formado")
+            
+        if nodo!= arbol: # se terminó el recorrido pero ne se volvio a la raiz, entonces hay bits incompletos
+            raise ValueError("Palabra invalida")
+        return ''.join(mensaje)
+    return deco
