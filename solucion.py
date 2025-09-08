@@ -54,3 +54,7 @@ def tabla_codigo(arbol, prefijo = ''): # la funcion a partir de una lista arbol 
 
 
 # Codificación y Decodificación
+def codificador(tabla): # fcion recibe un diccionario tabla
+    def cod(secuencia):# fcion interna que codifica
+        return ''.join(tabla[s] for s in secuencia) # Busca el codigo para cada simbolo de la secuencia. Con ''.join(...) une a todos en una cadena.
+    return cod
